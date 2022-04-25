@@ -1,0 +1,19 @@
+{
+    "path_csv": ["../../GTex_BrainCortex_proteincoding.csv"],
+    "patch_data_path": ["../../Histology/BrainCortex_Patches256x256/"],
+    "img_size": 256,
+    "max_patch_per_wsi":200,
+    "rna_features": 19198,
+    "weights_decay":0,
+    "lr": 0.0002,
+    "num_epochs": 900,
+    "n_workers": 10,
+    "device": 0,
+    "flag": "gan_proteincoding",
+    "save_dir": "checkpoints/gan_proteincoding_test/",
+    "summary_path": "summaries_gan_proteincoding/",
+    "log_interval": 100,
+    "bag_size": 50,
+    "batch_size": 64,
+    "quick": 0
+}

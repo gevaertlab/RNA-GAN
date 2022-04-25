@@ -11,6 +11,7 @@ from torchvision import transforms
 from torch.utils.data import DataLoader
 from torch.optim import AdamW 
 from sklearn.model_selection import KFold
+import argparse
 
 from resnet import *
 
@@ -208,9 +209,13 @@ class TileDataset(Dataset):
         return img, label
         
 if __name__ == "__main__": 
+    parser = argparse.ArgumentParser(description='Toy classification training')
+    parser.add_argument('--patch_data_path', type=str, help='Folder containig the data')
+    parser.add_argument('--csv_path', type=str, help='CSV path with the data')
+    args = parser.parse_args()
     # Arguments
-    patch_data_path = 'images_form/'
-    csv_path = 'real_toy_example.csv'
+    patch_data_path = args.patch_data_path
+    csv_path = args.csv_path
     test_accs = []
     batch_size = 16
     data = pd.read_csv(csv_path)

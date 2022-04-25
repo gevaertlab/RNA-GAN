@@ -1,0 +1,23 @@
+{
+    "path_csv": ["../../GTex_Lung_data_SSL_proteincoding.csv", "../../GTex_BrainCortex_proteincoding.csv", 
+                "../../GTex_Liver_proteincoding.csv", "../../GTex_Stomach_proteincoding.csv",
+                "../../GTex_Pancreas_proteincoding.csv"],
+    "patch_data_path": "../../Histology/Lung_Patches256x256/",
+    "img_size": 256,
+    "max_patch_per_wsi":100,
+    "rna_features": 19198,
+    "weights_decay":0,
+    "lr": 5e-5,
+    "num_epochs": 500,
+    "n_workers": 4,
+    "device": 0,
+    "flag": "betavae_proteincoding_tissues",
+    "save_dir": "checkpoints/betavae_training_tissues/",
+    "summary_path": "summaries_betavae_tissues/",
+    "log_interval": 20,
+    "bag_size": 40,
+    "batch_size": 128,
+    "beta": 0.0005,
+    "quick": 0,
+    "optimizer": "Adam"
+}
