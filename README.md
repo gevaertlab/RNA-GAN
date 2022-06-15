@@ -24,6 +24,9 @@ The acquisition of multi-modal biological data has increased in recent years, en
 
 A quiz is available to get a score on how well fake and real images are detected.
 
+## Checkpoints
+
+Checkpoints for the models can be downloaded [here](https://drive.google.com/drive/folders/1jvWPAaUyFuQYVK88E-hN9ccevljyzBk-?usp=sharing).
 ## Example usage
 
 ### betaVAE
