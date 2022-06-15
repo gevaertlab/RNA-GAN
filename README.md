@@ -49,92 +49,92 @@ pythion3 betaVAE_sample.py --seed 99 --config configs/betavae_tissues.json --log
 **Normal GAN training**
 
 ```bash
-python3 histopathology_gan.py --seed 99 --config configs/gan_run_brain.json --image_dir gan_generated_images/images_gan_brain --model_dir ./checkpoints/gan_brain/gan_brain --num_epochs 39 --gan_type dcgan --loss_type wgan --num_patches 600
+python3 histopathology_gan.py --seed 99 --config configs/gan_run_brain.json --image_dir gan_generated_images/images_gan_brain --model_dir ./checkpoints/gan_brain --num_epochs 39 --gan_type dcgan --loss_type wgan --num_patches 600
 
-python3 histopathology_gan.py --seed 99 --config configs/gan_run_lung.json --image_dir gan_generated_images/images_gan_lung --model_dir ./checkpoints/gan_lung/gan_lung --num_epochs 91 --gan_type dcgan --loss_type wgan --num_patches 600
+python3 histopathology_gan.py --seed 99 --config configs/gan_run_lung.json --image_dir gan_generated_images/images_gan_lung --model_dir ./checkpoints/gan_lung --num_epochs 91 --gan_type dcgan --loss_type wgan --num_patches 600
 ```
 
 **RNA-GAN training**
 
 ```bash
-python3 histopathology_gan.py --seed 99 --config configs/gan_run_brain.json --image_dir gan_generated_images/images_rna-gan_brain --model_dir ./checkpoints/rna-gan_brain/rna-gan_brain --num_epochs 24 --gan_type dcgan --loss_type wganvae --num_patches 600
-python3 histopathology_gan.py --seed 99 --config configs/gan_run_lung.json --image_dir gan_generated_images/images_rna-gan_lung --model_dir ./checkpoints/rna-gan_lung/rna-gan_lung --num_epochs 11 --gan_type dcgan --loss_type wganvae --num_patches 600
+python3 histopathology_gan.py --seed 99 --config configs/gan_run_brain.json --image_dir gan_generated_images/images_rna-gan_brain --model_dir ./checkpoints/rna-gan_brain --num_epochs 24 --gan_type dcgan --loss_type wganvae --num_patches 600
+python3 histopathology_gan.py --seed 99 --config configs/gan_run_lung.json --image_dir gan_generated_images/images_rna-gan_lung --model_dir ./checkpoints/rna-gan_lung --num_epochs 11 --gan_type dcgan --loss_type wganvae --num_patches 600
 ```
 
 **Compute FID metrics**
 
 ```bash
 # Real lung vs gan lung
-python3 fid.py --checkpoint ./checkpoints/gan_lung/gan_lung.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint ./checkpoints/gan_lung.model --config configs/gan_run_lung.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-15RJ7-0625.svs
 
 # Real lung vs rna-gan lung
-python3 fid.py --checkpoint ./checkpoints/rna-gan_lung/rna-gan_lung.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-15RJ7-0625.svs
 
 # Gan lung vs rna-gan lung
-python3 fid.py --checkpoint ./checkpoints/rna-gan_lung/rna-gan_lung.model --checkpoint2 ./checkpoints/gan_lung/gan_lung.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint ./checkpoint/rna-gan_lung.model --checkpoint2 ./checkpoints/gan_lung.model --config configs/gan_run_lung.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-15RJ7-0625.svs
 
 # Gan vs Real brain
-python3 fid.py --checkpoint ./checkpoints/gan_lung/gan_lung.model --config configs/gan_run_brain.json \
+python3 fid.py --checkpoint ./checkpoints/gan_lung.model --config configs/gan_run_brain.json \
         --sample_size 600
 
 # Real brain vs rna-gan
-python3 fid.py --checkpoint ./checkpoints/rna-gan_lung/rna-gan_lung.model --config configs/gan_run_brain.json \
+python3 fid.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-1C6WA-3025.svs
 
 # Gan brain vs gan lung
-python3 fid.py --checkpoint ./checkpoints/gan_lung/gan_lung.model --config configs/gan_run_brain.json \
+python3 fid.py --checkpoint ./checkpoints/gan_lung.model --config configs/gan_run_brain.json \
         --sample_size 600 --checkpoint2 ./checkpoints/gan_brain/gan_brain.model
 
 # brain rna-gan vs gan lung
-python3 fid.py --checkpoint2 ./checkpoints/gan_lung/gan_lung.model --checkpoint ./checkpoints/rna-gan_brain/rna-gan_brain.model --config configs/gan_run_brain.json \
+python3 fid.py --checkpoint2 ./checkpoints/gan_lung.model --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-1C6WA-3025.svs
 
 # lung rna-gan vs gan brain
-python3 fid.py --checkpoint2 ./checkpoints/gan_brain/gan_brain.model --checkpoint ./checkpoints/rna-gan_lung/rna-gan_lung.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint2 ./checkpoints/gan_brain.model --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-15RJ7-0625.svs
 
 # lung rna-gan vs  brain rna-gan 
-python3 fid.py --checkpoint2 ./checkpoints/rna-gan_brain/rna-gan_brain.model --checkpoint ./checkpoints/rna-gan_lung/rna-gan_lung.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint2 ./checkpoints/rna-gan_brain.model --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
         --config2 configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-15RJ7-0625.svs --patient2 GTEX-1C6WA-3025.svs
 
 #############
 
 # Real brain vs gan brain
-python3 fid.py --checkpoint ./checkpoints/gan_brain/gan_brain.model --config configs/gan_run_brain.json \
+python3 fid.py --checkpoint ./checkpoints/gan_brain.model --config configs/gan_run_brain.json \
         --sample_size 600 \
         --patient1 GTEX-1C6WA-3025.svs
 
 # Real brain vs rna-gan brain
-python3 fid.py --checkpoint ./checkpoints/rna-gan_brain/rna-gan_brain.model --config configs/gan_run_brain.json \
+python3 fid.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-1C6WA-3025.svs
 
 # Gan brain vs rna-gan brain
-python3 fid.py --checkpoint ./checkpoints/rna-gan_brain/rna-gan_brain.model --checkpoint2 ./checkpoints/gan_brain/gan_brain.model --config configs/gan_run_brain.json \
+python3 fid.py --checkpoint ./checkpoints/rna-gan_brain.model --checkpoint2 ./checkpoints/gan_brain.model --config configs/gan_run_brain.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-1C6WA-3025.svs
 
 # brain Gan vs Real lung
-python3 fid.py --checkpoint ./checkpoints/gan_brain/gan_brain.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint ./checkpoints/gan_brain.model --config configs/gan_run_lung.json \
         --sample_size 600
 
 # Real lung vs rna-gan brain
-python3 fid.py --checkpoint ./checkpoints/rna-gan_brain/rna-gan_brain.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_lung.json \
         --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-15RJ7-0625.svs
 
 # lung rna-gan vs  brain rna-gan
-python3 fid.py --checkpoint2 ./checkpoints/rna-gan_brain/rna-gan_brain.model --checkpoint ./checkpoints/rna-gan_lung/rna-gan_lung.model --config configs/gan_run_lung.json \
+python3 fid.py --checkpoint2 ./checkpoints/rna-gan_brain.model --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
         --config2 configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
         --patient1 GTEX-15RJ7-0625.svs --patient2 GTEX-1C6WA-3025.svs
 
