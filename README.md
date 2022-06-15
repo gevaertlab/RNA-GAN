@@ -22,7 +22,7 @@ The acquisition of multi-modal biological data has increased in recent years, en
 
 ## Web quiz
 
-A quiz is available to get a score on how well fake and real images are detected.
+A [quiz](https://rna-gan.stanford.edu) is available to get a score on how well fake and real images are detected.
 
 ## Checkpoints
 
