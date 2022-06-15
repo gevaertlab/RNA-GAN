@@ -1,5 +1,17 @@
 # Synthetic whole-slide imaging tile generation with gene expression profiles infused deep generative models
 
+**Francisco Carrillo-Perez<sup>1,2</sup>, Marija Pizurica<sup>1,3</sup>, Michael G. Ozawa<sup>4</sup>, Hannes Vogel<sup>4</sup>, Robert B. West<sup>4</sup>, Christina S. Kong<sup>4</sup>, Jeanne Shen<sup>4</sup> and Olivier Gevaert<sup>1,5</sup>**
+
+**<sup>1</sup> Stanford Center for Biomedical Informatics Research (BMIR), Stanford University, School of Medicine**
+
+**<sup>2</sup> Department of Architecture and Computer Technology (ATC), University of Granada**
+
+**<sup>3</sup> Internet technology and Data science Lab (IDLab), Ghent University**
+
+**<sup>4</sup> Department of Pathology, Stanford University, School of Medicine**
+
+**<sup>5</sup> Department of Biomedical Data Science, Stanford University, School of Medicine**
+
 ---
 
 ## Abstract
