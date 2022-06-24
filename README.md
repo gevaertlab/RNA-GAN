@@ -156,15 +156,3 @@ python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model -
 
 python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --rna_data GSE120795_brain_proteincoding.csv --random_patient
 ```
-
-**Training toy classification model**
-
-```bash
-
-# Using real samples
-python3 wsi_model.py --patch_data_path images_form/ --csv_path real_toy_example.csv
-
-# Using generated samples
-python3 wsi_model.py --patch_data_path images_form/ --csv_path rna-gan_toy_example.csv
-```
-
