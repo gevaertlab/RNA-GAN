@@ -1,5 +1,5 @@
 {
-    "path_csv": ["../../GTex_Lung_data_SSL_proteincoding.csv"],
+    "path_csv": ["../../GTex_Lung_data_noerrors_proteincoding.csv"],
     "patch_data_path": ["../../Histology/Lung_Patches256x256/"],
     "img_size": 256,
     "max_patch_per_wsi":200,
