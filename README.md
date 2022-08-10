@@ -159,7 +159,7 @@ python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model 
 
 ## Requirements and versions
 
-Requirements could be still by using pip:
+Requirements could be installed by using pip:
 
 ```
 pip install -r requirements.txt
