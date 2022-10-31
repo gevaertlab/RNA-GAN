@@ -152,9 +152,9 @@ python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_brain.model
 
 # From GEO series
 
-python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --rna_data GSE120795_lung_proteincoding.csv --random_patient
+python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_lung_proteincoding.csv --random_patient
 
-python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --rna_data GSE120795_brain_proteincoding.csv --random_patient
+python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_brain_proteincoding.csv --random_patient
 ```
 
 ## Requirements and versions
