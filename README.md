@@ -86,7 +86,21 @@ python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_brain.model
 
 # From GEO series
 
-python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --rna_data GSE120795_lung_proteincoding.csv --random_patient
+python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_lung_proteincoding.csv --random_patient
 
-python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --rna_data GSE120795_brain_proteincoding.csv --random_patient
+python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_brain_proteincoding.csv --random_patient
 ```
+
+## Requirements and versions
+
+Requirements could be installed by using pip:
+
+```
+pip install -r requirements.txt
+```
+
+They should take approximately 30 minutes.
+
+This software has been tested on CentOS Linux release 7.9.2009, and tested on Nvidia Geforce GTX 2080, and Nvidia Tesla P40 GPUs.
+
+No non-standard hardware is required.
