@@ -66,81 +66,14 @@ python3 histopathology_gan.py --seed 99 --config configs/gan_run_lung.json --ima
 
 **Compute FID metrics**
 
+To compute the FID metric we used the pytorch-fid library that can be installed using pip ```pip3 install pytorch-fid```. It can be executed between real and synthetic images as follows:
+
 ```bash
-# Real lung vs gan lung
-python3 fid.py --checkpoint ./checkpoints/gan_lung.model --config configs/gan_run_lung.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-15RJ7-0625.svs
+echo "REAL vs GAN 60k"
+python3 -m pytorch_fid real_tiles/ gan_tiles/ --device cuda:0
 
-# Real lung vs rna-gan lung
-python3 fid.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-15RJ7-0625.svs
-
-# Gan lung vs rna-gan lung
-python3 fid.py --checkpoint ./checkpoint/rna-gan_lung.model --checkpoint2 ./checkpoints/gan_lung.model --config configs/gan_run_lung.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-15RJ7-0625.svs
-
-# Gan vs Real brain
-python3 fid.py --checkpoint ./checkpoints/gan_lung.model --config configs/gan_run_brain.json \
-        --sample_size 600
-
-# Real brain vs rna-gan
-python3 fid.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-1C6WA-3025.svs
-
-# Gan brain vs gan lung
-python3 fid.py --checkpoint ./checkpoints/gan_lung.model --config configs/gan_run_brain.json \
-        --sample_size 600 --checkpoint2 ./checkpoints/gan_brain/gan_brain.model
-
-# brain rna-gan vs gan lung
-python3 fid.py --checkpoint2 ./checkpoints/gan_lung.model --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-1C6WA-3025.svs
-
-# lung rna-gan vs gan brain
-python3 fid.py --checkpoint2 ./checkpoints/gan_brain.model --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-15RJ7-0625.svs
-
-# lung rna-gan vs  brain rna-gan 
-python3 fid.py --checkpoint2 ./checkpoints/rna-gan_brain.model --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
-        --config2 configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-15RJ7-0625.svs --patient2 GTEX-1C6WA-3025.svs
-
-#############
-
-# Real brain vs gan brain
-python3 fid.py --checkpoint ./checkpoints/gan_brain.model --config configs/gan_run_brain.json \
-        --sample_size 600 \
-        --patient1 GTEX-1C6WA-3025.svs
-
-# Real brain vs rna-gan brain
-python3 fid.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-1C6WA-3025.svs
-
-# Gan brain vs rna-gan brain
-python3 fid.py --checkpoint ./checkpoints/rna-gan_brain.model --checkpoint2 ./checkpoints/gan_brain.model --config configs/gan_run_brain.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-1C6WA-3025.svs
-
-# brain Gan vs Real lung
-python3 fid.py --checkpoint ./checkpoints/gan_brain.model --config configs/gan_run_lung.json \
-        --sample_size 600
-
-# Real lung vs rna-gan brain
-python3 fid.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_lung.json \
-        --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-15RJ7-0625.svs
-
-# lung rna-gan vs  brain rna-gan
-python3 fid.py --checkpoint2 ./checkpoints/rna-gan_brain.model --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json \
-        --config2 configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt \
-        --patient1 GTEX-15RJ7-0625.svs --patient2 GTEX-1C6WA-3025.svs
-
+echo "REAL vs RNAGAN 60k"
+python3 -m pytorch_fid real_tiles/ rnagan_tiles/ --device cuda:0
 ```
 
 **Image generation**
