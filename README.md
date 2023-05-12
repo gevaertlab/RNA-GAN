@@ -86,9 +86,19 @@ python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_brain.model
 
 # From GEO series
 
+```bash
 python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_lung_proteincoding.csv --random_patient
 
 python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_brain_proteincoding.csv --random_patient
+```
+
+# ML experiment
+
+For running the ml experiment for TCGA-GBM vs TCGA-LUAD classifitation, firstly you need to download the tiles from the checkpoint folder. Then, modify the csv file found in the ref_file accordingly, and run the following commands:
+
+```bash
+python3 ml_experiments.py --csv_path ../ref_files/wsi_tiles_real.csv --save_dir /path/to/save/dir/ --use_pretrain # using pretrained weights
+python3 ml_experiments.py --csv_path ../ref_files/wsi_tiles_real.csv --save_dir /path/to/save/dir/ # training from scratch
 ```
 
 ## Requirements and versions
