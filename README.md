@@ -1,6 +1,6 @@
 # Synthetic whole-slide imaging tile generation with gene expression profiles infused deep generative models
 
-**Francisco Carrillo-Perez<sup>1,2</sup>, Marija Pizurica<sup>1,3</sup>, Michael G. Ozawa<sup>4</sup>, Hannes Vogel<sup>4</sup>, Robert B. West<sup>4</sup>, Christina S. Kong<sup>4</sup>, Jeanne Shen<sup>4</sup> and Olivier Gevaert<sup>1,5</sup>**
+**Francisco Carrillo-Perez<sup>1,2</sup>, Marija Pizurica<sup>1,3</sup>, Michael G. Ozawa<sup>4</sup>, Hannes Vogel<sup>4</sup>, Robert B. West<sup>4</sup>, Christina S. Kong<sup>4</sup>, Luis Javier Herrera<sup>2</sup>, Jeanne Shen<sup>4</sup> and Olivier Gevaert<sup>1,5</sup>**
 
 **<sup>1</sup> Stanford Center for Biomedical Informatics Research (BMIR), Stanford University, School of Medicine**
 
@@ -83,6 +83,7 @@ python3 -m pytorch_fid real_tiles/ rnagan_tiles/ --device cuda:0
 python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_lung.model --checkpoint2 ./checkpoints/gan_lung.model --config configs/gan_run_lung.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --patient1 GTEX-15RJ7-0625.svs
 
 python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_brain.model --checkpoint2 ./checkpoints/gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --patient1 GTEX-1C6WA-3025.svs
+```
 
 # From GEO series
 
