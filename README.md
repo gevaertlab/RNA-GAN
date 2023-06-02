@@ -28,29 +28,33 @@ A [quiz](https://rna-gan.stanford.edu) is available to get a score on how well f
 
 Checkpoints for the models can be downloaded [here](https://drive.google.com/drive/folders/1aJcH8pDpjhQ1hz39aalrqgYRh4eH4Y_8?usp=sharing).
 
-## Example usage
+# Training the betaVAE model on the RNA-Seq data
 
-### betaVAE
+Data needs to be downloaded from the [GTEx Portal](https://gtexportal.org/home/index.html). IDs are provided in the [ref_files](https://github.com/gevaertlab/RNA-GAN/tree/master/ref_files) folder. The JSON file configuration file is provided in the [config](https://github.com/gevaertlab/RNA-GAN/blob/master/configs/betavae_tissues.json) folder, along witht the protein coding genes identifiers. The genes expression values are expected to be in a CSV with the following columns:
+- **wsi_file_name**: Name of the WSI file
+- All protein code genes names with the 'rna_' prefix, as in the [protein_coding_genes.csv](https://github.com/gevaertlab/RNA-GAN/blob/master/ref_files/protein_coding_genes.csv) file.
 
-**Training the model**
+Once the files are available for all tissues (lung, brain, liver, stomach, and pancreas). The betaVAE can be trained as follows:
 
 ```bash
 python3 betaVAE_training.py --seed 99 --config configs/betavae_tissues.json --log 1 --parallel 0
 ```
-**Compute interpolation vectors**
+
+Once the model has been trained, the interpolation experiments can be performed, by firstly computing the interpolation vectors between two classes:
 
 ```bash
 python3 betaVAE_interpolation.py --seed 99 config --configs/betavae_tissues.json --log 0 --parallel 0
 ```
-**Interpolating**
+
+,and then interpolating samples or generating new ones:
 
 ```bash
 pythion3 betaVAE_sample.py --seed 99 --config configs/betavae_tissues.json --log 0 --parallel 0
 ```
 
-### Normal GAN and RNA-GAN
+# Training the GAN model on WSI tiles
 
-**Normal GAN training**
+WSI files in SVS format need to be downloaded from the [GTEx Portal](https://gtexportal.org/home/index.html). IDs are provided in the [ref_files](https://github.com/gevaertlab/RNA-GAN/tree/master/ref_files) folder, with one file per tissue. SVS files need to be placed in independent folders, and preprocessed using the [patch_gen_grid.py](https://github.com/gevaertlab/RNA-GAN/blob/master/src/preprocess/patch_gen_grid.py) file inside the ```src/preprocess``` folder. This script will create two folders: one containing the tiles and another one containing the tissue masks. Once the tiles have been obtained, we can proceeed with the GAN training both for lung and brain cortex tissue:
 
 ```bash
 python3 histopathology_gan.py --seed 99 --config configs/gan_run_brain.json --image_dir gan_generated_images/images_gan_brain --model_dir ./checkpoints/gan_brain --num_epochs 39 --gan_type dcgan --loss_type wgan --num_patches 600
@@ -58,14 +62,42 @@ python3 histopathology_gan.py --seed 99 --config configs/gan_run_brain.json --im
 python3 histopathology_gan.py --seed 99 --config configs/gan_run_lung.json --image_dir gan_generated_images/images_gan_lung --model_dir ./checkpoints/gan_lung --num_epochs 91 --gan_type dcgan --loss_type wgan --num_patches 600
 ```
 
-**RNA-GAN training**
+The path of the preprocessed tiles and the the csv files need to be specific in the json file inside the [configs](https://github.com/gevaertlab/RNA-GAN/tree/master/configs) folder.
+
+Once the model has been trained, we can generate new images using the following command:
+
+```bash
+python3 generate_tissue_images.py --checkpoint ./checkpoints/gan_lung.model --config configs/gan_run_lung.json --sample_size 600
+```
+
+# Training the RNA-GAN model on WSI tiles
+
+Since we have already preprocessed the tiles we can omit that step and train the RNA-GAN model directly as follows:
 
 ```bash
 python3 histopathology_gan.py --seed 99 --config configs/gan_run_brain.json --image_dir gan_generated_images/images_rna-gan_brain --model_dir ./checkpoints/rna-gan_brain --num_epochs 24 --gan_type dcgan --loss_type wganvae --num_patches 600
 python3 histopathology_gan.py --seed 99 --config configs/gan_run_lung.json --image_dir gan_generated_images/images_rna-gan_lung --model_dir ./checkpoints/rna-gan_lung --num_epochs 11 --gan_type dcgan --loss_type wganvae --num_patches 600
 ```
 
-**Compute FID metrics**
+Once the model has been trained, we can generate new images with the following command:
+
+```bash
+python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_lung.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --patient1 GTEX-15RJ7-0625.svs
+
+python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --patient1 GTEX-1C6WA-3025.svs
+```
+
+# Generalization experiments over the GEO series
+
+Data needs to be downloaded from the [GEO serie](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE120795), and select the protein coding genes provided [here](https://github.com/gevaertlab/RNA-GAN/blob/master/ref_files/protein_coding_genes.csv). If the gene is not available, the value is set to zero. Then, we can use the RNA-GAN checkpoint to generate new synthetic tiles:
+
+```bash
+python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_lung_proteincoding.csv --random_patient
+
+python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_brain_proteincoding.csv --random_patient
+```
+
+# Compute FID metrics
 
 To compute the FID metric we used the pytorch-fid library that can be installed using pip ```pip3 install pytorch-fid```. It can be executed between real and synthetic images as follows:
 
@@ -77,32 +109,16 @@ echo "REAL vs RNAGAN 60k"
 python3 -m pytorch_fid real_tiles/ rnagan_tiles/ --device cuda:0
 ```
 
-**Image generation**
-
-```bash
-python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_lung.model --checkpoint2 ./checkpoints/gan_lung.model --config configs/gan_run_lung.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --patient1 GTEX-15RJ7-0625.svs
-
-python3 generate_tissue_images.py --checkpoint ./checkpoints/rna-gan_brain.model --checkpoint2 ./checkpoints/gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae --vae_checkpoint checkpoints/betavae_tissues.pt --patient1 GTEX-1C6WA-3025.svs
-```
-
-# From GEO series
-
-```bash
-python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_lung.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_lung_proteincoding.csv --random_patient
-
-python3 generate_tissue_image.py --checkpoint ./checkpoints/rna-gan_brain.model --config configs/gan_run_brain.json --sample_size 600 --vae_checkpoint checkpoints/betavae_tissues.pt --rna_file GSE120795_brain_proteincoding.csv --random_patient
-```
-
 # ML experiment
 
-For running the ml experiment for TCGA-GBM vs TCGA-LUAD classifitation, firstly you need to download the tiles from the checkpoint folder. Then, modify the csv file found in the ref_file accordingly, and run the following commands:
+For running the ML experiment for TCGA-GBM vs TCGA-LUAD classifitation, firstly you need to download the tiles from the [checkpoint](https://drive.google.com/drive/folders/1aJcH8pDpjhQ1hz39aalrqgYRh4eH4Y_8?usp=sharing) folder. Then, modify the csv file found in the [ref_file](https://github.com/gevaertlab/RNA-GAN/blob/master/ref_files/wsi_tiles_real.csv) accordingly, and run the following commands:
 
 ```bash
 python3 ml_experiments.py --csv_path ../ref_files/wsi_tiles_real.csv --save_dir /path/to/save/dir/ --use_pretrain # using pretrained weights
 python3 ml_experiments.py --csv_path ../ref_files/wsi_tiles_real.csv --save_dir /path/to/save/dir/ # training from scratch
 ```
 
-## Requirements and versions
+# Requirements and versions
 
 Requirements could be installed by using pip:
 
