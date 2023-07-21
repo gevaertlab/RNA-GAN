@@ -131,3 +131,19 @@ They should take approximately 30 minutes.
 This software has been tested on CentOS Linux release 7.9.2009, and tested on Nvidia Geforce GTX 2080, and Nvidia Tesla P40 GPUs.
 
 No non-standard hardware is required.
+
+# Citation
+
+If you find this work useful for your research, please cite as follows:
+
+```
+@article{carrillo-perez2023synthetic,
+title = {Synthetic whole-slide image tile generation with gene expression profile-infused deep generative models},
+journal = {Cell Reports Methods},
+pages = {100534},
+year = {2023},
+issn = {2667-2375},
+doi = {https://doi.org/10.1016/j.crmeth.2023.100534},
+url = {https://www.sciencedirect.com/science/article/pii/S2667237523001716},
+author = {Francisco Carrillo-Perez and Marija Pizurica and Michael G. Ozawa and Hannes Vogel and Robert B. West and Christina S. Kong and Luis Javier Herrera and Jeanne Shen and Olivier Gevaert},
+```
