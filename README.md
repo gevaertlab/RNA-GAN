@@ -134,6 +134,10 @@ This software has been tested on CentOS Linux release 7.9.2009, and tested on Nv
 
 No non-standard hardware is required.
 
+
+# License
+
+&copy; [Gevaert's Lab](https://med.stanford.edu/gevaertlab.html) MIT License
 # Citation
 
 If you find this work useful for your research, please cite as follows:
