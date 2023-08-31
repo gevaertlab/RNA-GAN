@@ -14,7 +14,7 @@
 
 ---
 
-The manuscript can be found in [Cell Reports Methods](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(23)00171-6).
+[Journal link](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(23)00171-6) | [Web quiz](https://rna-gan.stanford.edu)
 
 ## Abstract
 
