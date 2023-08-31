@@ -4,7 +4,7 @@
 
 **<sup>1</sup> Stanford Center for Biomedical Informatics Research (BMIR), Stanford University, School of Medicine**
 
-**<sup>2</sup> Department of Architecture and Computer Technology (ATC), University of Granada**
+**<sup>2</sup> Computer Engineering, Automatics and Robotics Department, University of Granada**
 
 **<sup>3</sup> Internet technology and Data science Lab (IDLab), Ghent University**
 
@@ -13,6 +13,8 @@
 **<sup>5</sup> Department of Biomedical Data Science, Stanford University, School of Medicine**
 
 ---
+
+The manuscript can be found in [Cell Reports Methods](https://www.cell.com/cell-reports-methods/fulltext/S2667-2375(23)00171-6).
 
 ## Abstract
 
