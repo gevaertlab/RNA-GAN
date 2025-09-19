@@ -28,7 +28,7 @@ A [quiz](https://rna-gan.stanford.edu) is available to get a score on how well f
 
 ## Checkpoints
 
-Checkpoints for the models can be downloaded [here](https://drive.google.com/drive/folders/1aJcH8pDpjhQ1hz39aalrqgYRh4eH4Y_8?usp=sharing).
+Checkpoints for the models can be downloaded [here](https://zenodo.org/records/17159418).
 
 # Training the betaVAE model on the RNA-Seq data
 
